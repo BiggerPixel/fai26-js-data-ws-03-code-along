@@ -68,6 +68,76 @@ const cart = {
 
 // Vi skriver funktionerna och anropen för varukorgen här tillsammans.
 
+const calculateLineValue = (item) => {
+  const lineValue = item.product.price * item.quantity;
+  return lineValue;
+};
+
+const calculateLineWeight = (item) => {
+  const weight = item.product.weightInGrams * item.quantity;
+  return weight;
+};
+
+const calculateWeightBasedShipping = (totalWeight) => {
+  if (totalWeight <= 1000) return 49;
+
+  if (totalWeight <= 3000) return 89;
+
+  return 149;
+};
+
+const calculateShipping = (totalWeight, orderValue, membershipLevel) => {
+  const weightBasedShipping = calculateWeightBasedShipping(totalWeight);
+
+  if (membershipLevel === "PREMIUM") {
+    return {
+      cost: 0,
+      explanation: `Fri frakt för premiummedlemmar. Ordinarie vikt-baserad frakt: ${weightBasedShipping} kr`,
+    };
+  }
+
+  if (orderValue >= 1500) {
+    return {
+      cost: 0,
+      explanation: `Fri frakt eftersom att ordervärdet är minst 1500 kr. Ordinarie vikt-baserad frakt: ${weightBasedShipping} kr`,
+    };
+  }
+
+  return {
+    cost: weightBasedShipping,
+    explanation: `Frakten baserat på vikten: ${weightBasedShipping} kr`,
+  };
+};
+
+const calculateCartSummary = (cartData) => {
+  let orderValue = 0;
+  let totalWeight = 0;
+
+  cartData.items.forEach((item) => {
+    const lineValue = calculateLineValue(item);
+    const lineWeight = calculateLineWeight(item);
+
+    orderValue = orderValue + lineValue;
+    totalWeight = totalWeight + lineWeight;
+
+    console.log(item.product.name, { lineValue, lineWeight });
+  });
+
+  const shipping = calculateShipping(
+    totalWeight,
+    orderValue,
+    cartData.user.membershipLevel,
+  );
+
+  return {
+    orderValue,
+    totalWeight,
+    shippingCost: shipping.cost,
+    shippingExplanation: shipping.explanation,
+    amountToPay: orderValue + shipping.cost,
+  };
+};
+
 // Färdig hjälpkod för gränssnittet. Vi skriver inte DOM-koden i denna code-along.
 const formatCurrency = (value, currency) => {
   return `${value} ${currency === "SEK" ? "kr" : currency}`;
@@ -127,3 +197,7 @@ const renderCheckout = (cartData, summary) => {
     "SEK",
   );
 };
+
+const summary = calculateCartSummary(cart);
+console.log("Ordersammanfattning:", summary);
+renderCheckout(cart, summary);
