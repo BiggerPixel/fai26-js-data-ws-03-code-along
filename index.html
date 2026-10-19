@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kassa | Nordbutiken</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body class="min-h-screen bg-slate-100 text-slate-950">
+    <header class="border-b border-slate-200 bg-white">
+      <div
+        class="mx-auto flex max-w-6xl items-center justify-between px-5 py-5"
+      >
+        <div>
+          <p class="text-sm font-semibold tracking-[0.2em] text-indigo-600">
+            NORDBUTIKEN
+          </p>
+          <p class="text-2xl font-bold">Kassa</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <img
+            id="customer-avatar"
+            class="h-11 w-11 rounded-full bg-slate-200 object-cover"
+            alt="Kundens profilbild"
+          />
+          <div class="text-right">
+            <p id="customer-name" class="font-semibold">Kund</p>
+            <p id="membership-level" class="text-sm text-slate-500">
+              Medlemsnivå
+            </p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main
+      class="mx-auto grid max-w-6xl gap-6 px-5 py-8 lg:grid-cols-[1fr_360px]"
+    >
+      <section class="space-y-4">
+        <div>
+          <p class="text-sm font-medium text-indigo-600">Steg 1 av 3</p>
+          <h1 class="text-3xl font-bold">Kontrollera varukorgen</h1>
+          <p class="mt-2 text-slate-600">
+            Produkter, antal och leveransvikt hämtas från varukorgens data.
+          </p>
+        </div>
+
+        <div id="cart-items" class="space-y-3"></div>
+      </section>
+
+      <aside
+        class="h-fit rounded-3xl bg-slate-950 p-6 text-white shadow-xl lg:sticky lg:top-6"
+      >
+        <p
+          class="text-sm font-semibold uppercase tracking-widest text-indigo-300"
+        >
+          Ordersammanfattning
+        </p>
+
+        <dl class="mt-6 space-y-4">
+          <div class="flex items-center justify-between gap-4">
+            <dt class="text-slate-300">Varor</dt>
+            <dd id="order-value" class="font-semibold">0 kr</dd>
+          </div>
+          <div class="flex items-center justify-between gap-4">
+            <dt class="text-slate-300">Total vikt</dt>
+            <dd id="total-weight" class="font-semibold">0 g</dd>
+          </div>
+          <div class="flex items-center justify-between gap-4">
+            <dt class="text-slate-300">Frakt</dt>
+            <dd id="shipping-cost" class="font-semibold">0 kr</dd>
+          </div>
+        </dl>
+
+        <p
+          id="shipping-explanation"
+          class="mt-5 rounded-2xl bg-slate-800 px-4 py-3 text-sm text-slate-200"
+        ></p>
+
+        <div
+          class="mt-6 flex items-end justify-between gap-4 border-t border-slate-700 pt-6"
+        >
+          <p class="text-slate-300">Att betala</p>
+          <p id="amount-to-pay" class="text-3xl font-bold">0 kr</p>
+        </div>
+
+        <button
+          class="mt-6 w-full rounded-2xl bg-indigo-500 px-5 py-4 font-bold text-white hover:bg-indigo-400"
+          type="button"
+        >
+          Fortsätt till leverans
+        </button>
+      </aside>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
